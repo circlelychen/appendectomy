@@ -22,3 +22,11 @@ class 連署(models.Model):
 	狀況 = models.CharField(max_length=20, choices=狀況種類, default=印出)
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	修改時間 = models.DateTimeField(auto_now=True)
+
+class 店家(models.Model):
+	流水號 = models.AutoField(primary_key=True)
+	名稱 = models.CharField(max_length=40)
+	店址 = models.CharField(max_length=40)
+	電話 = models.CharField(max_length=20)
+	圖片 = models.BinaryField()
+
