@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     '提議連署',
+    'qrverify',
 )
 
 MIDDLEWARE_CLASSES = (

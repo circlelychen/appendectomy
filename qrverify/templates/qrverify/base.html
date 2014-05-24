@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post QR Code</title>
+    {% block extrahead %}{% endblock %}
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'qrverify/style.css' %}" />
+</head>
+
+<body>
+    <div id="container">
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>

@@ -9,7 +9,6 @@ from django.template import RequestContext, loader
 from django.utils.decorators import method_decorator
 from django.views import generic
 from 提議連署.模型 import 提議
-from 提議連署.模型 import 店家
 import urllib
 from django.views.generic.base import View
 import qrcode
@@ -96,23 +95,3 @@ def QRCode(request, data):
 			回應['Content-Type'] = 'image/png'
 			return 回應
 
-
-class ShopQRCode(View):
-	def get(self, request, *args, **kwargs):
-		uid=request.GET.get("uid")
-		item = 店家.objects.get(流水號=uid)
-		from django.core import serializers
-		data = serializers.serialize("json", item)
-		return HttpResponse(data, content_type='application/json')
-	def post(self, request, *args, **kwargs):
-		參數=dict(request.POST)
-		wanted = 'name={0}, address={1}, phone={2}'.format(參數['name'], 地址 = 參數['address'], 電話 = 參數['phone'])
-		print (wanted)
-		item = 店家(名稱 = 參數['name'], 地址 = 參數['address'], 電話 = 參數['phone'], 圖片 = request.FILES['file'])
-		item.save()
-		encoded_str = "http:127.0.0.1:8000/ShopQRCode?uid={0}".format(item.id)
-		png圖片 = qrcode.make(encoded_str)
-		回應 = HttpResponse()
-		png圖片.save(回應 , "PNG")
-		回應['Content-Type'] = 'image/png'
-		return 回應
