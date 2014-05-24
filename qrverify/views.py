@@ -18,18 +18,20 @@ class Verify(View):
     def get(self, request, *args, **kwargs):
         uid=request.GET.get("uid", None)
         if not uid:
-            return render_to_response('qrverify/post.html')
+            template = loader.get_template('qrverify/post.html')
+            content = RequestContext(request, {})
+            return HttpResponse(template.render(content))
         item = Shop.objects.get(uid=uid)
-        from django.core import serializers
-        data = serializers.serialize("json", item)
-        return HttpResponse(data, content_type='application/json')
+        data = { "name": item.name, "address": item.address, "phone": item.address} 
+        import json
+        return HttpResponse(json.dumps(data), content_type='application/json')
     def post(self, request, *args, **kwargs):
         params=dict(request.POST)
-        wanted = 'name={0}, address={1}, phone={2}'.format(params['name'], 地址 = params['address'], 電話 = params['phone'])
+        wanted = 'name={0}, address={1}, phone={2}'.format(params['name'], params['address'], params['phone'])
         print (wanted)
-        item = Shop(name = params['name'], address = params['address'], phone = params['phone'], image = request.FILES['file'])
+        item = Shop(name = params['name'], address = params['address'], phone = params['phone'])
         item.save()
-        encoded_str = "http:127.0.0.1:8000/qrverify?uid={0}".format(item.id)
+        encoded_str = "http:127.0.0.1:8000/qrverify?uid={0}".format(item.pk)
         png = qrcode.make(encoded_str)
 
         reps = HttpResponse()

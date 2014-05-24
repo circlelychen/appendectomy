@@ -1,9 +1,7 @@
 {% extends "qrverify/base.html" %}
 
 {% block content %}
-	<form action='/qrverify' method='post'>{% csrf_token %}
-	file：
-	<input type="file" name='file'></input>
+	<form action='/qrverify' method='post' enctype="multipart/form-data" >{% csrf_token %}
 	name:
 	<input type="text" name='name'></input>
 	address:
